@@ -67,16 +67,10 @@ var twoSum2 = function (nums, target) {
 
 	while ((sortNums[start] + sortNums[end] > target)) {
 	  end--;
-	  if (sortNums[end] + sortNums[start] === target) {
-		break out
-	  }
 	}
 
 	while ((sortNums[start] + sortNums[end] < target)) {
 	  start++;
-	  if (sortNums[end] + sortNums[start] === target) {
-		break out
-	  }
 	}
   }
 

@@ -37,6 +37,9 @@ var lengthOfLongestSubstring = function (s) {
   return result
 };
 
+/*双指针解法？？？ 怎么...*/
+/*看到有个用 str.indexOf 方法的...按理不应该更慢吗？？？？*/
+
 lengthOfLongestSubstring('pwwkew')
 lengthOfLongestSubstring('abadc')
 lengthOfLongestSubstring('aaaaaa')

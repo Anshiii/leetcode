@@ -12,6 +12,7 @@ var longestPalindrome = function (s) {
 
   let local = '';
   for (let i = 1; i < s.length; i++) {
+    /*这种方法的思路其实是 对每一个字母都视为中心 得出的答案比较最长的，*/
 	//每次遍历找的是？ 当前字母的可组成的最大序列？ 目前的最大序列(这个做为 result)？
 	let str = s[i];
 	/*保持原来的奇偶性，维持下去。*/
@@ -61,14 +62,19 @@ var longestPalindrome = function (s) {
 
 };
 
-longestPalindrome('bbbb') //bbbb
-longestPalindrome('babab') //babab
+/*longestPalindrome('bbbb') //bbbb
+ longestPalindrome('babab') //babab
 
-longestPalindrome('zzabcdcba')
-longestPalindrome('cbccbc') //cbccbc
-longestPalindrome('abaaba')
+ longestPalindrome('zzabcdcba')
+ longestPalindrome('cbccbc') //cbccbc
+ longestPalindrome('abaaba')
 
-/*回文不是应该至少..两个字符吗*/
-longestPalindrome('a')
-longestPalindrome('')
-longestPalindrome('ac')
+ /!*回文不是应该至少..两个字符吗*!/
+ longestPalindrome('a')
+ longestPalindrome('')
+ longestPalindrome('ac')*/
+
+longestPalindrome("ababababababa") //"ababab a bababa"
+// longestPalindrome("ababaaababa") //"ababab a bababa"
+
+

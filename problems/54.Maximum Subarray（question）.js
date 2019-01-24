@@ -34,11 +34,11 @@ var maxSubArray = function (nums) {
 };
 
 
-maxSubArray([1, 8, -1, 4, -1, 2, 1, -5, 4])
-maxSubArray([-2, 1])
+maxSubArray([ 8, -1, 4, -1, 2, 1, -5, 4])
+/*maxSubArray([-2, 1])
 maxSubArray([-2, -1])
 maxSubArray([1, 2])
 maxSubArray([-3, 2, -7])
-maxSubArray([8, -19, 5, -4, 20])
+maxSubArray([8, -19, 5, -4, 20])*/
 
 

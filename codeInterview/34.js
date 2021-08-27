@@ -51,10 +51,10 @@ var pathSum = function (root, target) {
       return;
     }
 
-    if (root.left && root.left.val ) {
+    if (root.left) {
       def(root.left, k - root.left.val, [...path, root.left.val]);
     }
-    if (root.right && root.right.val ) {
+    if (root.right) {
       def(root.right, k - root.right.val, [...path, root.right.val]);
     }
   }
@@ -85,7 +85,6 @@ function arrToTree(arr) {
   return root;
 }
 
-
-let A = arrToTree([1,-2,-3,1,3,-2,null,-1]);
+let A = arrToTree([1, -2, -3, 1, 3, -2, null, -1]);
 
 console.log(pathSum(A, -1));

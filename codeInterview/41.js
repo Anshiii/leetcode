@@ -37,28 +37,28 @@ MedianFinder.prototype.addNum = function (num) {
 
   /* 两端 */
   if (num <= this.data[0]) {
-    pos = 0;
+    this.data.unshift(num);
+    return;
   } else if (num >= this.data[this.data.length - 1]) {
-    pos = this.data.length;
+    this.data.push(num);
+    return;
   }
 
-  if (pos === Infinity) {
-    /* @TODO 关于二分法的 循环等号？ 每一层 + 1 / -1 / 不加不减？ */
-    while (left < right) {
-      let mid = left + Math.floor((right - left) * 0.5);
-      let cur = this.data[mid];
-      if (cur < num) {
-        left = mid + 1;
-      } else if (cur > num) {
-        right = mid - 1;
-      } else {
-        pos = mid;
-        break;
-      }
+  while (left <= right) {
+    let mid = left + Math.floor((right - left) * 0.5);
+    let cur = this.data[mid];
+    if (cur < num) {
+      left = mid + 1;
+    } else if (cur > num) {
+      right = mid - 1;
+    } else {
+      pos = mid;
+      this.data.splice(pos, 0, num);
+      return;
     }
   }
 
-  this.data.splice(pos + 1, 0, num);
+  this.data.splice(left, 0, num);
 };
 
 /**
@@ -66,18 +66,20 @@ MedianFinder.prototype.addNum = function (num) {
  */
 MedianFinder.prototype.findMedian = function () {
   const len = this.data.length;
+  let result 
   if (len % 2 !== 1) {
     let idxL = (len - 2) * 0.5,
       idxR = len * 0.5;
 
-    return this.data[idxL] * 0.5 + this.data[idxR] * 0.5;
+      result =  this.data[idxL] * 0.5 + this.data[idxR] * 0.5;
 
     /* 偶数 */
   } else {
     /* 奇数 */
     let idx = (len - 1) * 0.5;
-    return this.data[idx];
+    result =  this.data[idx];
   }
+  return result.toFixed(1)
 };
 
 /**
@@ -88,8 +90,25 @@ MedianFinder.prototype.findMedian = function () {
  */
 
 var obj = new MedianFinder();
-obj.addNum(1);
+obj.addNum(6);
+console.log(obj.findMedian());
+obj.addNum(10);
+console.log(obj.findMedian());
 obj.addNum(2);
 console.log(obj.findMedian());
+obj.addNum(6);
+console.log(obj.findMedian());
+obj.addNum(5);
+console.log(obj.findMedian());
+obj.addNum(0);
+console.log(obj.findMedian());
+obj.addNum(6);
+console.log(obj.findMedian());
 obj.addNum(3);
+console.log(obj.findMedian());
+obj.addNum(1);
+console.log(obj.findMedian());
+obj.addNum(0);
+console.log(obj.findMedian());
+obj.addNum(0);
 console.log(obj.findMedian());

@@ -22,7 +22,8 @@ double findMedian() - 返回目前所有元素的中位数。
  * initialize your data structure here.
  */
 var MedianFinder = function () {
-  this.data = [];
+  this.heapA = []; // 大顶堆，栈顶是最大的
+  this.heapB = []; // 小顶堆，栈顶是最小的
 };
 
 /**
@@ -30,35 +31,21 @@ var MedianFinder = function () {
  * @return {void}
  */
 MedianFinder.prototype.addNum = function (num) {
-  /* 二分法找到位置？ */
-  let left = 0,
-    right = this.data.length - 1,
-    pos = Infinity;
-
-  /* 两端 */
-  if (num <= this.data[0]) {
-    this.data.unshift(num);
-    return;
-  } else if (num >= this.data[this.data.length - 1]) {
-    this.data.push(num);
-    return;
-  }
-
-  while (left <= right) {
-    let mid = left + Math.floor((right - left) * 0.5);
-    let cur = this.data[mid];
-    if (cur < num) {
-      left = mid + 1;
-    } else if (cur > num) {
-      right = mid - 1;
-    } else {
-      pos = mid;
-      this.data.splice(pos, 0, num);
-      return;
+  /* 小顶堆，大顶堆 */
+  let lenA = this.heapA.length,
+    lenB = this.heapB.length,
+    aTop = this.heapA[lenA - 1],
+    bTop = this.heapB[lenB - 1];
+  if ((lenA + lenB) % 2 === 0) {
+    /* 偶数 */
+    //a 多一数
+    if (num > bTop) {
+      this.heapA.push(this.heapB.pop());
+      this.heapB.push(num);
     }
+  } else {
+    /* 奇数 */
   }
-
-  this.data.splice(left, 0, num);
 };
 
 /**
@@ -66,20 +53,20 @@ MedianFinder.prototype.addNum = function (num) {
  */
 MedianFinder.prototype.findMedian = function () {
   const len = this.data.length;
-  let result 
+  let result;
   if (len % 2 !== 1) {
     let idxL = (len - 2) * 0.5,
       idxR = len * 0.5;
 
-      result =  this.data[idxL] * 0.5 + this.data[idxR] * 0.5;
+    result = this.data[idxL] * 0.5 + this.data[idxR] * 0.5;
 
     /* 偶数 */
   } else {
     /* 奇数 */
     let idx = (len - 1) * 0.5;
-    result =  this.data[idx];
+    result = this.data[idx];
   }
-  return result.toFixed(1)
+  return result.toFixed(1);
 };
 
 /**

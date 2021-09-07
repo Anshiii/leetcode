@@ -16,6 +16,18 @@
 
 */
 var myPow = function (x, n) {
+  /* 
+  针对 x^n , 将 n 转为二进制 2^0a1 +2^1a2 +.... 2^kak
+
+  x^n =   x^(2^0a1 +2^1a2 +.... 2^kak) =  x^(2^0a1) * x^(2^1a2) * ... x^(2^kak)
+
+  若 ai = 0 ,则 x^(2^iai) 为 0
+  若 ai = 1,则 x^(2^iai) 为 x^(2^i）
+
+  则 需要得出 a1 ... ak  （属于 0，1）
+  
+  */
+
   if (x === 0) {
     if (n > 0) {
       return 0;
@@ -33,9 +45,13 @@ var myPow = function (x, n) {
     n = -n;
   }
 
-  let result = 1;
-  for (let i = n; i > 0; i--) {
-    result = result * x;
+  let mx = x,result=1
+  while (n) {
+    if (n & 1) {
+      result = result * mx;
+    }
+    mx = mx * mx;
+    n =n >>> 1;
   }
 
   return result;
@@ -48,8 +64,11 @@ b = 2147483647;
 
 console.log(myPow(c, d), Math.pow(c, d));
 
-return;
+
 console.log(myPow(a, b), Math.pow(a, b));
+
+
+console.log(myPow(3, 2), Math.pow(3, 2));
 
 console.log(myPow(0, 2), Math.pow(0, 2));
 console.log(myPow(0, -2), Math.pow(0, -2));
@@ -60,3 +79,6 @@ console.log(myPow(-2, 0), Math.pow(-2, 0));
 
 console.log(myPow(2, -3), Math.pow(2, -3));
 console.log(myPow(-2, -3), Math.pow(-2, -3));
+
+
+

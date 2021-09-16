@@ -19,9 +19,9 @@ var dicesProbability = function (n) {
     总共 
     
     */
-  let dp = [];
+  let dp = [],base = 1/6
   // 骰子数为 1 时，结果 n ~ 6n 1-6的遍布概率。
-  dp[0] = [0.16667, 0.16667, 0.16667, 0.16667, 0.16667, 0.16667];
+  dp[0] = [base, base, base, base, base, base];
 
   // 骰子数为 1 时，结果 n ~ 6n 2-12 的遍布概率。
   /*  
@@ -29,21 +29,28 @@ var dicesProbability = function (n) {
     3   dp[0][0]*1/6 + dp[0][1]* 1/6 1 + 2 , 2 + 1
     4   ... 1+3 2+2 3+1 
     */
-  for (let num = 1; num <= n; num++) {
+  for (let num = 1; num < n; num++) {
     let cur = [];
     dp[num] = cur;
-    let min = num + 1,
-      max = 6 * (1 + num);
-    
-      for (let index = 0; index < dp[num-1].length; index++) {
-          const p = dp[num-1][index];
 
-          
+    let lasToffset = num,
+      currentOffset = num + 1; // num-1 个骰子数的 起始概率的值。
+
+    for (let index = 0; index < dp[num - 1].length; index++) {
+      const p = dp[num - 1][index];
+      /* 从 fn-1,x 直接计算 fn,x+1 ... 有边界问题， 估使用 fn-1 所有的概率，各自计算后 累加。 */
+      for (let count = 1; count <= 6; count++) {
+        let resIdx = lasToffset + index + count - currentOffset; // 投掷的结果
+        if (cur[resIdx]) {
+          cur[resIdx] += p * base;
+        } else {
+          cur[resIdx] = p * base;
+        }
       }
-    for (let i = min; i <= max; i++) {
-      let p = 0;
-
-      cur.push(p);
     }
   }
+  return dp[n-1]
 };
+
+console.log(dicesProbability(3));
+

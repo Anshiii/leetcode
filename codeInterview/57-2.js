@@ -16,7 +16,7 @@
  * @param {number} target
  * @return {number[][]}
  */
-var findContinuousSequence = function (target) {
+var findContinuousSequence1 = function (target) {
   /* target/2 */
 
   const max = Math.ceil(target / 2),
@@ -52,6 +52,41 @@ var findContinuousSequence = function (target) {
   return result;
 };
 
+// 使用前缀和
+
+/**
+ * @param {number} target
+ * @return {number[][]}
+ */
+var findContinuousSequence = function (target) {
+  // 因为至少含两个数，且两个数必须连续 右边边界为 target*0.5 ceil整数
+  let end = Math.ceil(target * 0.5),
+    preSum = 0,
+    preMap = {
+      0: 0, // 肯定只有1个，
+    };
+  let source = [0];
+  let result = [];
+
+  for (let i = 1; i <= end; i++) {
+    source[i] = i;
+    preSum += i;
+    const diff = preSum - target;
+    if (preMap[diff] !== undefined && i - preMap[diff] > 1) {
+      // 取 preMap 下标后一位 到 i
+      result.push(source.slice(preMap[diff] + 1, i + 1));
+    }
+    preMap[preSum] = i;
+  }
+  return result;
+};
+
 console.log(findContinuousSequence(1));
-console.log(findContinuousSequence(15));
+
 console.log(findContinuousSequence(9));
+console.log(findContinuousSequence(15));
+
+console.log(findContinuousSequence1(1));
+
+console.log(findContinuousSequence1(9));
+console.log(findContinuousSequence1(15));

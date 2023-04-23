@@ -12,7 +12,10 @@ var combine = function (n, k) {
 
   const resultList = [];
   function pickNumber(paths = [], start = 0) {
-    console.log("---anshi---paths", paths);
+    // 剪枝1: 不可能抵达答案
+    if (nums.length - start + paths.length < k) {
+      return;
+    }
     if (paths.length === k) {
       resultList.push([...paths]);
       return;
@@ -28,4 +31,4 @@ var combine = function (n, k) {
   return resultList;
 };
 
-combine(4, 2);
+combine(4, 3);

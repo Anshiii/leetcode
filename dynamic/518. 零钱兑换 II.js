@@ -22,6 +22,8 @@
  * i=1 ---- [1,1,1,1,1,1]
  * i=2 ---- [1,1,2,2,3,3]
  * i=3 ---- [1,1,2,2,3,4]
+ * 
+ * 2. 另外一种累加，遍历 
  */
 var change = function (amount, coins) {
   let dp = new Array(amount + 1).fill(0);
@@ -29,13 +31,9 @@ var change = function (amount, coins) {
 
   for (let i = 0; i < coins.length; i++) {
     let cur = coins[i];
-    for (let j = amount; j >= 0; j--) {
-      if (j < cur) continue;
-      let x = j - cur;
-      while (x >= 0) {
-        dp[j] += dp[x];
-        x = x - cur;
-      }
+    // 只有数量大于 cur 的值需要刷新，小于的可以直接沿用旧值 
+    for (let j = cur; j <= amount; j++) {
+        dp[j] += dp[j - cur]; // 为什么只考虑用一个硬币的情况？ => 这里不是只考虑一个，可能在之前就已经用了  coin ，这里是最后一个是 coin2 但是之前可能已经是用 coin 结尾的组合。
     }
   }
   const ret = dp[amount];
